@@ -41,8 +41,6 @@ def get_lines_page(width: float, height:float, num_lines:int=12, horiz_margin:fl
 
     lines_pdf = PyPDF2.PdfFileReader(packet)
     return lines_pdf.getPage(0)
-    
-
 
 def add_lines_pages(in_file: PyPDF2.PdfFileReader, num_lines:int=12, horiz_margin:float=0, vert_margin:float=0,line_thickness:float=1) -> PyPDF2.PdfFileWriter:
     """Takes a PDF and adds a new page after each page that just contains lines

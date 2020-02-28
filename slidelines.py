@@ -72,7 +72,6 @@ def add_lines_pages(in_file: PyPDF2.PdfFileReader, num_lines:int=12, horiz_margi
         writer.addPage(lines_page)
 
     return writer
-    writer.write(out_file)
 
 def main():
     parser = argparse.ArgumentParser(description=

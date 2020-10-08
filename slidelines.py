@@ -3,6 +3,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import re
+import os
 
 import argparse
 
@@ -82,6 +83,8 @@ def main():
     parser.add_argument('--horizontalmargin', '-m',type=float, default=0)
     parser.add_argument('--verticalmargin', '-v',type=float, default=0)
     parser.add_argument('--outputfilename', '-o')
+    parser.add_argument('--replace', '-r', action='store_true',
+                        help='Delete original file after pdf with lines is produced')
 
     args = parser.parse_args()
     if not args.outputfilename:
@@ -96,6 +99,9 @@ def main():
                     args.thickness
                 )
     output_pdf.write(out_file)
+
+    if args.replace:
+        os.remove(args.filename)
 
 if __name__ == "__main__":
     main()

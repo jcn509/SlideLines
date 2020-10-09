@@ -3,7 +3,6 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import re
-import os
 
 import argparse
 
@@ -88,8 +87,11 @@ def main():
 
     args = parser.parse_args()
     if not args.outputfilename:
-        args.outputfilename = re.sub(r"\.pdf$","_with_lines.pdf",args.filename)
-        
+        if args.replace:
+            args.outputfilename = args.filename
+        else:
+            args.outputfilename = re.sub(r"\.pdf$", "_with_lines.pdf", args.filename)
+
     in_file = PyPDF2.PdfFileReader(args.filename)
     out_file = open(args.outputfilename,"wb")
     output_pdf = add_lines_pages(in_file,
@@ -99,9 +101,6 @@ def main():
                     args.thickness
                 )
     output_pdf.write(out_file)
-
-    if args.replace:
-        os.remove(args.filename)
 
 if __name__ == "__main__":
     main()

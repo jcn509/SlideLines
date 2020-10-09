@@ -82,11 +82,16 @@ def main():
     parser.add_argument('--horizontalmargin', '-m',type=float, default=0)
     parser.add_argument('--verticalmargin', '-v',type=float, default=0)
     parser.add_argument('--outputfilename', '-o')
+    parser.add_argument('--replace', '-r', action='store_true',
+                        help='Delete original file after pdf with lines is produced')
 
     args = parser.parse_args()
     if not args.outputfilename:
-        args.outputfilename = re.sub(r"\.pdf$","_with_lines.pdf",args.filename)
-        
+        if args.replace:
+            args.outputfilename = args.filename
+        else:
+            args.outputfilename = re.sub(r"\.pdf$", "_with_lines.pdf", args.filename)
+
     in_file = PyPDF2.PdfFileReader(args.filename)
     out_file = open(args.outputfilename,"wb")
     output_pdf = add_lines_pages(in_file,
